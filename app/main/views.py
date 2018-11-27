@@ -1,8 +1,8 @@
 from flask_login import login_required,current_user
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-from ..models import User,Comment
-from .forms import UpdateProfile,CommentForm
+from ..models import User,Comment,Blog
+from .forms import UpdateProfile,BlogForm,CommentForm
 from .. import db,photos
 
 
@@ -46,7 +46,8 @@ def update_pic(uname):
 
 @main.route('/',methods=['GET','POST'])
 def index():
-    return render_template('index.html')
+    blogs = Blog.query.all()
+    return render_template('index.html',blogs = blogs)
 
 @main.route('/add/blog',methods = ['GET','POST'])
 def add_blog():
@@ -55,9 +56,9 @@ def add_blog():
     if form.validate_on_submit():
         title = form.Title.data
         blog = form.blog.data
-        category = form.category.data
+        #category = form.category.data
         
-        new_blog = blog(title = title, blog = blog, user = current_user, category = category)
+        new_blog = Blog(title = title, blog = blog, user = current_user)
         db.session.add(new_blog)
         db.session.commit()
         return redirect(url_for('main.index'))
@@ -65,10 +66,10 @@ def add_blog():
     return render_template('add_blog.html', form = form)
 
 
-@main.route('/add/comment<blog_id>',methods = ['GET','POST'])
+@main.route('/add/comment/<blog_id>',methods = ['GET','POST'])
 def add_comment(blog_id):
     form = CommentForm()
-    blog = blog.query.filter_by(id = blog_id).first()
+    blog = Blog.query.filter_by(id = blog_id).first()
     if form.validate_on_submit():
         title = form.Title.data
         comment = form.comment.data
@@ -81,7 +82,7 @@ def add_comment(blog_id):
 
 @main.route('/view/comment<blog_id>',methods = ['GET','POST'])
 def view_comment(blog_id):
-    blog = blog.query.filter_by(id = blog_id).first()
+    blog = Blog.query.filter_by(id = blog_id).first()
     comments = Comment.query.filter_by(blog_id = blog.id)
         
     return render_template('view_comment.html', comments = comments)
