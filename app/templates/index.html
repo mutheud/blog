@@ -1,60 +1,29 @@
 {% extends 'base.html' %} {% block styles %} {{ super() }}
 <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}" />
+{% endblock %} 
 
-{% endblock %} {% block content%}
-<div class="container" style="background-color: greenyellow">
-    <a href="{{url_for('main.add_pitch')}}">Add pitch</a>
+{% block content%}
+<div class="container">
+    <a href="{{url_for('main.add_blog')}}">Add blog</a>
+    <h3>How to Immerse Yourself in Spanish When You Don’t Live Abroad</h3>
+    <h5>Watch Spanish Videos on FluentU</h5>
     <h6>
-        "If you would convince a man that he does wrong, do right. But do not care
-        to convince him. Men will believe what they see. Let them see."
+        Watching authentic videos—videos made by native Spanish speakers for a native-speaking audience—is an excellent method
+        of simulating the immersive experience of being abroad in a Spanish-speaking country.
+        
+        A great place to access authentic Spanish videos online is right here at FluentU. FluentU has put together a collection
+        of the best real-world Spanish video content from the web, and all of the videos can all be watched with Spanish
+        subtitles—score!
+        
+        The videos types range from commercials and music videos to funny homemade mini-movies and speeches—so no matter your
+        interests or level, you’ll find something excellent to watch.
+
     </h6>
 
-    <h3>Business</h3>
-    {% for pitch in business%}
-    <h3>{{ pitch.title }}</h3>
-    <p>{{ pitch.pitch }}</p>
-    <p>By {{ pitch.user.username }}</p>
-
-    <a href="{{url_for('main.add_comment',pitch_id = pitch.id)}}">Add comment</a>
-
-    <a href="{{url_for('main.view_comment',pitch_id = pitch.id)}}">View comment</a>
-
-
+    {% for blog in blogs %}
+        <p>{{blog.blog}}</p>
+        <a href="{{url_for('main.add_comment',blog_id = blog.id)}}">Add comment</a>
+        <a style="margin-left:90px;" href="{{url_for('main.view_comment',blog_id = blog.id)}}">View comment</a>
     {% endfor %}
-
-    <h3>Entertainment</h3>
-    {% for pitch in entertainment%}
-    <h3>{{ pitch.title }}</h3>
-    <p>{{ pitch.pitch }}</p>
-    <p>By {{ pitch.user.username }}</p>
-    <a href="{{url_for('main.add_comment',pitch_id = pitch.id)}}">Add comment</a>
-
-    <a href="{{url_for('main.view_comment',pitch_id = pitch.id)}}">View comment</a>
-
-    {% endfor %}
-
-    <h3>Comedy</h3>
-    {% for pitch in comedy%}
-    <h3>{{ pitch.title }}</h3>
-    <p>{{ pitch.pitch }}</p>
-    <p>By {{ pitch.user.username }}</p>
-    <a href="{{url_for('main.add_comment',pitch_id = pitch.id)}}">Add comment</a>
-
-    <a href="{{url_for('main.view_comment',pitch_id = pitch.id)}}">View comment</a>
-
-    {% endfor %}
-
-    <h3>Religion</h3>
-    {% for pitch in religion%}
-    <h3>{{ pitch.title }}</h3>
-    <p>{{ pitch.pitch }}</p>
-    <p>By {{ pitch.user.username }}</p>
-    <a href="{{url_for('main.add_comment',pitch_id = pitch.id)}}">Add comment</a>
-
-    <a href="{{url_for('main.view_comment',pitch_id = pitch.id)}}">View comment</a>
-    {% endfor %}
-
-
-</div>
-
+    
 {% endblock %}
