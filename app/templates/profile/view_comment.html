@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content%}
+{% for comment in comments%}
+<h3>{{comment.title}}</h3>
+<p>{{comment.comment}}</p>
+<p>By{{comment.user.username}}</p>
+{% endfor %}
+{% endblock %}
