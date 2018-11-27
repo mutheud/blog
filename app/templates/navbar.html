@@ -1,0 +1,19 @@
+<div class="navbar navbar-inverse" role="navigation" style="background-color:black">
+    <div class="container-fluid">
+        <div class="navbar-header">
+
+            <a class="btn btn-primary" href="/"> Blog </a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+            <li><a class="btn btn-primary" style="margin-right:20px" href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
+            <br>
+            <li><a class="btn btn-primary" href="{{url_for('auth.logout')}}">Sign out</a></li>
+            {% else %}
+            <li><a class="btn btn-primary" href="{{url_for('auth.login')}}">Sign in</a></li>
+            {%endif%}
+        </ul>
+
+    </div>
+</div>
